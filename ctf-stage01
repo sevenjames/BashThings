@@ -1,0 +1,16 @@
+#!/bin/bash
+charge100() {
+	for i in $(seq 1 100); do
+		echo "CHARGE"
+		sleep 0.001
+	done
+}
+
+sendit() {
+	for i in $(seq 1 5); do
+		charge100
+		echo "ACTIVATE"
+	done
+}
+
+sendit | nc challenge.apocalypse.lol 9999
