@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# demonstration of the password generation method presented at:
+# https://ss64.com/pass/
+# *final punctuation substitution not performed.
+
+# analysis of the method:
+# https://security.stackexchange.com/questions/44368/are-the-ss64-com-password-generators-a-good-approach
+# summary: this is weak. do not use.
+
+# both methods produce the password:
+# "xqxm/bY5ghvMMi8Yb7Eh"
+
+# method 1
+# using standard tools
+# sha256sum : compute the hash, output is a hexdump
+# xxd : convert the hexdump to binary form
+# base64 : encode the hash in base64
+# cut : truncate to 20 characters
+echo -n "foo:stackexchange" | sha256sum | xxd -r -p | base64 | cut -b -20
+
+# method 2
+# using nonstandard tool hashrat
+# hashrat can do all of that in one command
+echo -n "foo:stackexchange" | hashrat -sha256 -64 -n 20

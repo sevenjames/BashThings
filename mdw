@@ -1,0 +1,25 @@
+#!/bin/bash
+# Generate random passphrases using the diceware method/program.
+# Use the improved EFF wordlist in place of the original list.
+# Append all generated passphrases to a log file.
+# The generation method is solid, but saving to file ruins everything.
+# For fun only. Do not use for actual account security.
+
+o="./mdw.log" # output log file
+n=5 # number of phrases to generate
+f="Generating passphrases:"
+
+echo -ne "$f 0/$n"\\r # initialize progress display
+# -n suppresses newline, -e enables backslash escapes
+# \\r generates carraige return
+
+for i in $(seq 1 $n); do
+    diceware -d " " -w en_eff >> $o
+    echo -ne "$f $i/$n"\\r # update progress display
+    done
+
+echo # terminate the progress display
+
+tail -$n $o # print the newly generated passphrases
+p=$(wc -l $o|cut -d " " -f 1) # get line count of log file
+echo "There are now $p passphrases in the log file."
